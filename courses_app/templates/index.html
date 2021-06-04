@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Courses</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <!-- <link rel="stylesheet" href="../static/css/style.css" -->
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="form">
+                <h2>Add a new course</h2>
+                <div id="errors">
+                    {% if messages %}
+                    <ul>    
+                        {% for message in messages %}    
+                            <li>{{ message }}</li>    
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>      <!--end errors-->
+                <form action = "/add_course" method = "POST">
+                    {% csrf_token %}
+                    <p>Name: <input id="name_input" type="text" name="name"></p>
+                    <p>Description: <textarea id="desc_input" name = "desc"></textarea></p>
+                    <button type="submit">Add</button>
+                </form>
+            </div>      <!--end form-->
+            <div id="table">
+                <h2>Courses</h2>
+                <table>
+                    <tr>
+                        <th>Course Name</th>
+                        <th>Description</th>
+                        <th>Date Added</th>
+                        <th>Actions</th>
+                    </tr>
+                    {% for course in all_the_courses %}
+                        <tr>
+                            <td>{{course.name}}</td>
+                            <td>{{course.desc}}</td>
+                            <td>{{course.created_at}}</td>
+                            <td id="actions"><a href= "/courses/destroy/{{course.id}}">remove</a>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>      <!--end table-->
+        </div>      <!--end wrapper-->
+    </body>
+</html>

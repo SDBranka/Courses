@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Courses</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/destroy_check.css' %}">
+        
+    </head>
+    <body>
+        <div id="wrapper">
+            <h2>Are you sure you want to delete the following course?</h2>
+            <p>Name: <span id="name_output">{{this_course.name}}</span></p>
+            <div id="desc_div">
+                <p>Description:</p>
+                <p id="desc_output">{{this_course.desc}}</p>
+            </div>      <!--end desc_div--> 
+            <div id="buttons">
+                <button id="no"><a href="/">No</a></button>
+                <button id="destroy"><a href="/process_destroy/{{this_course.id}}">Yes! I want to delete this</a></button>
+            </div>      <!--end buttons-->
+            </div>      <!--end wrapper-->
+    </body>
+</html>
