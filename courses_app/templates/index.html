@@ -42,9 +42,9 @@
                     {% for course in all_the_courses %}
                         <tr>
                             <td>{{course.name}}</td>
-                            <td>{{course.desc}}</td>
+                            <td>{{course.description.desc}}</td>
                             <td>{{course.created_at}}</td>
-                            <td id="actions"><a href= "/courses/destroy/{{course.id}}">remove</a>
+                            <td id="actions"><a href= "/courses/destroy/{{course.id}}">remove</a>   |   <a href="/courses/comment/{{course.id}}">comment</a></td>
                         </tr>
                     {% endfor %}
                 </table>

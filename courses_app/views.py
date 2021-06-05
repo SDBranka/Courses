@@ -1,6 +1,6 @@
 from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
-from .models import Course
+from .models import Course, Description, Comment
 from django.contrib import messages
 
 # Create your views here.
@@ -19,10 +19,8 @@ def add_course(request):
                 messages.error(request, error)
             return redirect("/")
         else:
-            Course.objects.create(
-                name = request.POST["name"], 
-                desc = request.POST["desc"], 
-            )
+            new_course = Course.objects.create(name = request.POST["name"])
+            Description.objects.create(course = new_course, desc= request.POST['desc'])
             return redirect("/")   
     else:
         return redirect("/")
@@ -37,3 +35,20 @@ def process_destroy(request, course_id):
     course_to_destroy = Course.objects.get(id=course_id)
     course_to_destroy.delete()
     return redirect("/")
+
+def comment(request, course_id):
+    context = {
+        "course_to_comment": Course.objects.get(id=course_id)
+    }
+    return render(request, "comment.html", context)
+    
+def add_comment(request, course_id):
+    if request.method =='POST':
+        course_to_comment = Course.objects.get(id=course_id)
+        Comment.objects.create(course = course_to_comment, content = request.POST['content'])
+        return redirect(f'/courses/comment/{course_id}')
+    else:
+        return redirect(f'/courses/comment/{course_id}')
+
+    
+
